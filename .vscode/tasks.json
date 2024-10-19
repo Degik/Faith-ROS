@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Setup ROS environment",
+            "type": "shell",
+            "command": "conda deactivate && source ~/ros2_rclpy_ws/install/setup.bash",
+            "problemMatcher": []
+        }
+    ]
+}
