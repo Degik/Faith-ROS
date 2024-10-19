@@ -49,5 +49,5 @@ ros2 run ros_test1 camera
 ## Inference node
 For now run the inference script with python3:
 ```bash
-python3 src/inference.py
+python3 inference.py <model_name>
 ```
