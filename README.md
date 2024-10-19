@@ -14,7 +14,7 @@
 ### Requirements
 - ROS2 Humble
 - OpenCV (v4.5 or higher)
-- cv_bridge
+- Cv_bridge
 - Python3.10
 - YOLOv8 (installed via `ultralytics` package)
 
