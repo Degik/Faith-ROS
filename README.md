@@ -38,16 +38,20 @@ After cloning the repository, navigate to the workspace and build the package us
 ```bash
 colcon build
 ```
+## Install setup
+```bash
+source install/setup.bash
+```
 
 ## Camera node
 This node captures video from a camera device and publishes the frames to a ROS2 topic
 
 ```bash
-ros2 run ros_test1 camera
+ros2 run faith_ros camera
 ```
 
 ## Inference node
 For now run the inference script with python3:
 ```bash
-python3 inference.py <model_name>
+ros2 run faith_ros inference <model_name>
 ```
