@@ -69,10 +69,10 @@ target_link_libraries(camera
 )
 install(TARGETS camera DESTINATION lib/${PROJECT_NAME})
 
-# Python
+# Python - node inference
 install(
-  PROGRAMS src/inference.py
+  PROGRAMS src/py/inference.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+#install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})

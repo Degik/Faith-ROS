@@ -1,4 +1,4 @@
 build/
 install/
 log/
-yolov8m.pt
+yolo*
