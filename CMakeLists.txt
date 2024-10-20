@@ -1,17 +1,20 @@
 cmake_minimum_required(VERSION 3.8)
-project(ros_test1)
+project(faith_ros)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
+# C++ 14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
 endif()
 
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(rcl REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(rclpy REQUIRED)          # Python
 find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
-find_package(OpenCV 4.5 REQUIRED)
+find_package(OpenCV REQUIRED)
 find_package(CURL REQUIRED)
 find_package(TIFF REQUIRED)
 
@@ -25,16 +28,9 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/src/class
 )
 
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  set(ament_cmake_cpplint_FOUND TRUE)
-  set(ament_cmake_uncrustify_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
-endif()
+# Build C++ nodes
 
-ament_package()
-
-# Node master
+## Node master
 add_executable(master
   src/master.cpp
   src/class/VideoPublisher.cpp
@@ -50,9 +46,8 @@ target_link_libraries(master
   ${TIFF_LIBRARIES}
 )
 install(TARGETS master DESTINATION lib/${PROJECT_NAME})
-link_directories(/usr/lib/x86_64-linux-gnu)
 
-# Node camera
+## Node camera
 add_executable(camera
   src/camera.cpp
   src/class/VideoPublisher.cpp
@@ -69,10 +64,11 @@ target_link_libraries(camera
 )
 install(TARGETS camera DESTINATION lib/${PROJECT_NAME})
 
-# Python - node inference
+# Install Python scripts
 install(
   PROGRAMS src/py/inference.py
   DESTINATION lib/${PROJECT_NAME}
+  RENAME inference
 )
 
-#install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+ament_package()

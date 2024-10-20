@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 # ROS2
 import rclpy
@@ -30,6 +32,7 @@ def main():
         print("Usage: python3 inference.py <model_name>")
         return
     rclpy.init(args=sys.argv)
+    print("Faith-ROS node started")
     node = YOLOInferenceNode(sys.argv[1])
     rclpy.spin(node)
     rclpy.shutdown()
