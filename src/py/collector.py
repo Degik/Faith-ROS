@@ -1,4 +1,4 @@
-import configparser
+import configparser as configparser
 
 # Class to read the config.ini file
 class Collector:
@@ -6,11 +6,11 @@ class Collector:
         self.config = configparser.ConfigParser()
         self.config.read('config.ini')
 
-    def get_cameras_topic(self):
-        return self.get_all_config('cameras_topic')
+    def get_cameras_topic(self) -> list:
+        return [item[1] for item in self.config.items('cameras_topic')]
 
-    def get_cameras_ids(self):
-        return self.get_all_config('cameras_ids')
-    
-    def get_model(self):
-        return self.get_config('model')
+    def get_cameras_ids(self) -> list:
+        # Return the cameras ids with a integer list
+        return [item[1] for item in self.config.items('cameras_ids')]
+    def get_model(self) -> str:
+        return self.config.get('model_name', 'model')

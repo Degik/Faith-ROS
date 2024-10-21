@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 # ROS2
 import rclpy
@@ -16,7 +18,9 @@ def main():
     model_name = collector.get_model()
 
     rclpy.init(args=sys.argv)
-    node = YOLOInferenceNode(sys.argv[1])
+    # Mode: inference or real_time
+    # Create the YOLOInferenceNode
+    node = YOLOInferenceNode(cameras_topic, cameras_ids, model_name, 'real_time')
     rclpy.spin(node)
     rclpy.shutdown()
         

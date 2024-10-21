@@ -5,7 +5,7 @@
 int main(void){
     rclcpp::init(0, nullptr); // Initialize the ROS2
     // Create the publisher
-    VideoPublisher video_publisher("camera", 0, 100); // Topic name: camera, Device: 0, Time cycle: 100
+    VideoPublisher video_publisher("camera0", 0, 100); // Topic name: camera, Device: 0, Time cycle: 100
     video_publisher.createPublisher();
     video_publisher.publishVideo();
     // Spin the node

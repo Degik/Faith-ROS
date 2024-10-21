@@ -71,4 +71,9 @@ install(
   RENAME inference
 )
 
+install(
+  DIRECTORY src/py/
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 ament_package()

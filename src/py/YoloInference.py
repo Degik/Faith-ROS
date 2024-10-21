@@ -14,6 +14,7 @@ class YOLOInferenceNode(Node):
         # Cameras
         self.cameras_topic = cameras_topic              # List of cameras topic
         self.cameras_ids = cameras_ids                  # List of cameras ids
+        self.camera_id = 0                              # Camera id
 
         # Tools
         self.convert = CvBridge()                       # Used for convert the ROS image into CV
@@ -25,9 +26,9 @@ class YOLOInferenceNode(Node):
 
         # Mode selection
         if mode == 'real_time':
-            self.infer_image_real_time(cameras_ids)
+            self.infer_image_real_time()
         elif mode == 'inference':
-            self.inference_sender(cameras_topic)
+            self.inference_sender()
         else:
             print("Mode not supported")
             exit()
@@ -44,19 +45,27 @@ class YOLOInferenceNode(Node):
     # Infer the image and show the result
     def infer_image(self, msg):
         # Infer the image
+        print(f'Infering the image from the camera {self.camera_id}')
+        print(f'Converting the image from the camera {self.camera_id}')
         frame = self.convert.imgmsg_to_cv2(msg, self.pixel_format)
         # https://docs.ultralytics.com/reference/engine/results/#ultralytics.engine.results.Results.numpy
         results = self.model(frame)
         annotated_frame = results[0].plot()
+        print(f'Annotated the image from the camera {self.camera_id}')
         self.frames.append(annotated_frame)
 
     # Infer the image in real time and show the result for the specific camera
-    def infer_image_real_time(self, single_camera_id):
+    def infer_image_real_time(self):
         # Create a subscription for the camera
-        subscription = self.create_subscription(Image, self.cameras_topic[single_camera_id], self.infer_image, 10)
+        print(f'Setting the subscription for the camera {self.camera_id} on the topic {self.cameras_topic[self.camera_id]}')
+        subscription = self.create_subscription(Image, self.cameras_topic[self.camera_id], self.infer_image, 10)
         # Wait for the subscription to be ready
-        cv.imshow(f"YOLOv8 prediction from {single_camera_id}", self.frames[0])
+        rclpy.spin_once(self, timeout_sec=1.0)
+        print(f'Waiting for the camera {self.camera_id} to publish')
+        cv.imshow(f"YOLOv8 prediction from {self.camera_id}", self.frames[0])
         cv.waitKey(1)
+        # Remove the frame from the list
+        self.frames.pop(0)
 
 
     # This method take the frames and topics elaborated and send them to master
@@ -71,3 +80,6 @@ class YOLOInferenceNode(Node):
             self.publisher.publish(msg)
             # Remove the frame from the list
             self.frames.pop(i)
+
+    def set_camera(self, camera_id):
+        self.camera_id = camera_id
