@@ -45,6 +45,7 @@ class YOLOInferenceNode(Node):
     def infer_image(self, msg):
         # Infer the image
         frame = self.convert.imgmsg_to_cv2(msg, self.pixel_format)
+        # https://docs.ultralytics.com/reference/engine/results/#ultralytics.engine.results.Results.numpy
         results = self.model(frame)
         annotated_frame = results[0].plot()
         self.frames.append(annotated_frame)
@@ -54,8 +55,7 @@ class YOLOInferenceNode(Node):
         # Create a subscription for the camera
         subscription = self.create_subscription(Image, self.cameras_topic[single_camera_id], self.infer_image, 10)
         # Wait for the subscription to be ready
-        # https://docs.ultralytics.com/reference/engine/results/#ultralytics.engine.results.Results.numpy
-        cv.imshow("YOLOv8 prediction", self.frames[0])
+        cv.imshow(f"YOLOv8 prediction from {single_camera_id}", self.frames[0])
         cv.waitKey(1)
 
 
