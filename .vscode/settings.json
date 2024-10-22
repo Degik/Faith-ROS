@@ -1,7 +1,7 @@
 {
     "ros.distro": "humble",
     "C_Cpp.errorSquiggles": "disabled",
-    "cmake.sourceDirectory": "/home/davide/Documents/ROS/ros_test1",
+    "cmake.sourceDirectory": "/home/rix/dev/Project/Faith-ROS",
     "files.associations": {
         "cctype": "cpp",
         "clocale": "cpp",

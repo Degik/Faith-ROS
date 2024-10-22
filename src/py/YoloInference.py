@@ -39,7 +39,9 @@ class YOLOInferenceNode(Node):
         for topic in self.cameras_topic:
             # Append the subscription to the list
             subsbcriptions.append(self.create_subscription(Image, topic, self.infer_image, 10))
+
         # Wait for the subscription to be ready
+        rclpy.spin_once(self)
         self.send_frames()
 
     # Infer the image and show the result
@@ -52,7 +54,9 @@ class YOLOInferenceNode(Node):
         results = self.model(frame)
         annotated_frame = results[0].plot()
         print(f'Annotated the image from the camera {self.camera_id}')
-        self.frames.append(annotated_frame)
+        cv.imshow(f"YOLOv8 prediction from {self.camera_id}", annotated_frame)
+        cv.waitKey(1)
+        #self.frames.append(annotated_frame)
 
     # Infer the image in real time and show the result for the specific camera
     def infer_image_real_time(self):
@@ -60,23 +64,22 @@ class YOLOInferenceNode(Node):
         print(f'Setting the subscription for the camera {self.camera_id} on the topic {self.cameras_topic[self.camera_id]}')
         subscription = self.create_subscription(Image, self.cameras_topic[self.camera_id], self.infer_image, 10)
         # Wait for the subscription to be ready
-        rclpy.spin_once(self, timeout_sec=1.0)
-        print(f'Waiting for the camera {self.camera_id} to publish')
-        cv.imshow(f"YOLOv8 prediction from {self.camera_id}", self.frames[0])
-        cv.waitKey(1)
-        # Remove the frame from the list
-        self.frames.pop(0)
+        #rclpy.spin_once(self)
+        #print(f'Waiting for the camera {self.camera_id} to publish')
+        #if self.frames:
+            #cv.imshow(f"YOLOv8 prediction from {self.camera_id}", self.frames[0])
+            #cv.waitKey(1)
+            #Remove the frame from the list
+            #self.frames.pop(0)
 
 
     # This method take the frames and topics elaborated and send them to master
     def send_frames(self, topics):
-        # Spin once
-        rclpy.spin_once(self)
         for i, frame in enumerate(self.frames):
             # Convert the frame into a ROS image
             msg = self.convert.cv2_to_imgmsg(frame, self.pixel_format)
             # Publish the image on the topic of the camera
-            self.publisher = self.create_publisher(Image, topics[i], 10)
+            self.publisher = self.create_publisher(Image, topics[i], 10) # ??? forse non si mette
             self.publisher.publish(msg)
             # Remove the frame from the list
             self.frames.pop(i)
