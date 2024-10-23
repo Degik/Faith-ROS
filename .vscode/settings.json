@@ -1,7 +1,7 @@
 {
     "ros.distro": "humble",
     "C_Cpp.errorSquiggles": "disabled",
-    "cmake.sourceDirectory": "/home/rix/dev/Project/Faith-ROS",
+    "cmake.sourceDirectory": "/home/davide/Documents/ROS/Faith-ROS",
     "files.associations": {
         "cctype": "cpp",
         "clocale": "cpp",
@@ -80,7 +80,8 @@
         "filesystem": "cpp",
         "any": "cpp",
         "regex": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "__split_buffer": "cpp"
     },
     "terminal.integrated.shellIntegration.enabled": false,
     "terminal.integrated.profiles.linux": {

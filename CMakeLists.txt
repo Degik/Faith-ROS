@@ -33,7 +33,8 @@ include_directories(
 ## Node master
 add_executable(master
   src/master.cpp
-  src/class/VideoPublisher.cpp
+  src/class/FileCollector.cpp
+  src/class/VideoCollector.cpp
 )
 ament_target_dependencies(master
   rclcpp

@@ -20,7 +20,7 @@ def main():
     rclpy.init(args=sys.argv)
     # Mode: inference or real_time
     # Create the YOLOInferenceNode
-    node = YOLOInferenceNode(cameras_topic, cameras_ids, model_name, 'real_time')
+    node = YOLOInferenceNode(cameras_topic, cameras_ids, model_name, 'inference')
     rclpy.spin(node)
     rclpy.shutdown()
         
