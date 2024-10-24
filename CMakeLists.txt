@@ -31,6 +31,7 @@ include_directories(
 # Build C++ nodes
 
 ## Node master
+#[===[
 add_executable(master
   src/master.cpp
   src/class/FileCollector.cpp
@@ -47,7 +48,7 @@ target_link_libraries(master
   ${TIFF_LIBRARIES}
 )
 install(TARGETS master DESTINATION lib/${PROJECT_NAME})
-
+]===]
 ## Node camera
 add_executable(camera
   src/camera.cpp
