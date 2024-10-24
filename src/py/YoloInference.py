@@ -52,7 +52,7 @@ class YOLOInferenceNode(Node):
         print(f'Converting the image from the camera {self.camera_id}')
         frame = self.convert.imgmsg_to_cv2(msg, self.pixel_format)
         # https://docs.ultralytics.com/reference/engine/results/#ultralytics.engine.results.Results.numpy
-        frame = cv.resize(frame, self.resolution)
+        #frame = cv.resize(frame, self.resolution)
         results = self.model(frame)
         annotated_frame = results[0].plot()
         print(f'Annotated the image from the camera {self.camera_id}')
