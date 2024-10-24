@@ -21,9 +21,9 @@ def main():
     rclpy.init(args=sys.argv)
     # Mode: inference or real_time
     # Create the YOLOInferenceNode
-    #node = YOLOInferenceNode(cameras_topic, cameras_ids, model_name, 'inference')
+    node = YOLOInferenceNode(cameras_topic, cameras_ids, model_name, 'real_time')
     # Create the OnnxInferenceNode
-    node = OnnxInferenceNode(cameras_topic, cameras_ids, model_name, 'real_time', 'yolo', 'yolo_anns.json')
+    #node = OnnxInferenceNode(cameras_topic, cameras_ids, model_name, 'real_time', 'yolo', 'yolo_anns.json')
     rclpy.spin(node)
     rclpy.shutdown()
         
