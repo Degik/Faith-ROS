@@ -6,7 +6,7 @@
 
 class VideoPublisher : public rclcpp::Node { 
     public:
-        VideoPublisher(std::string topic_name, int device, int time_cycle);     // Constructor
+        VideoPublisher(std::string topic_name, int device, int time_cycle, int height, int width);     // Constructor
         ~VideoPublisher();                                          // Destructor
         // Methods
         void createPublisher();     // Method to create the publisher
@@ -19,6 +19,8 @@ class VideoPublisher : public rclcpp::Node {
         std::string topic_name;              // Name of the topic (Is where the video will be published)
         int device;                          // Device to capture the video
         int time_cycle;                      // Time cycle to callback
+        int height;                          // Height of the video
+        int width;                           // Width of the video
         // Status
         bool working;                        // Status of the video
         // Publisher

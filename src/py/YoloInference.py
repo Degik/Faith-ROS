@@ -9,7 +9,7 @@ from ultralytics import YOLO
 
 # YOLOInferencenode class elaborates the inference of the YOLO model for the cameras and publish the results
 class YOLOInferenceNode(Node):
-    def __init__(self, cameras_topic: list, cameras_ids: list, model_name: str, mode: str):
+    def __init__(self, cameras_topic: list, cameras_ids: list, model_name: str, mode: str, confidence = 0.40, resolution = (640, 640)):
         super().__init__('yolo_inference_node')
         # Cameras
         self.cameras_topic = cameras_topic              # List of cameras topic
@@ -20,7 +20,8 @@ class YOLOInferenceNode(Node):
         self.convert = CvBridge()                       # Used for convert the ROS image into CV
         self.model = YOLO(model_name)                   # Load the model yolov8m
         self.pixel_format = 'bgr8'                      # Set the pixel format
-
+        self.confidence = confidence                    # Set the confidence
+        self.resolution = resolution                    # Set the resolution
         # Frames
         self.frames = []                                # List of frames
 
@@ -51,6 +52,7 @@ class YOLOInferenceNode(Node):
         print(f'Converting the image from the camera {self.camera_id}')
         frame = self.convert.imgmsg_to_cv2(msg, self.pixel_format)
         # https://docs.ultralytics.com/reference/engine/results/#ultralytics.engine.results.Results.numpy
+        frame = cv.resize(frame, self.resolution)
         results = self.model(frame)
         annotated_frame = results[0].plot()
         print(f'Annotated the image from the camera {self.camera_id}')
@@ -64,6 +66,7 @@ class YOLOInferenceNode(Node):
         print(f'Converting the image from the camera {self.camera_id}')
         frame = self.convert.imgmsg_to_cv2(msg, self.pixel_format)
         # https://docs.ultralytics.com/reference/engine/results/#ultralytics.engine.results.Results.numpy
+        frame = cv.resize(frame, self.resolution)
         results = self.model(frame)
         annotated_frame = results[0].plot()
         self.frames.append(annotated_frame)

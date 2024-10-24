@@ -1,7 +1,7 @@
 #include "VideoPublisher.hpp"
 
 // Constructor
-VideoPublisher::VideoPublisher(std::string topic_name, int device, int time_cycle) : Node("camera_node"){
+VideoPublisher::VideoPublisher(std::string topic_name, int device, int time_cycle, int height = 1280, int width = 720) : Node("camera_node"){
     // Initialize the attributes
     this->topic_name = topic_name;
     this->device = device;
@@ -29,6 +29,9 @@ void VideoPublisher::publishVideo(){
         std::cerr << "Error: The video can't be opened" << std::endl;
         return;
     }
+    // Set the width and height
+    this->capture.set(cv::CAP_PROP_FRAME_WIDTH, this->width);
+    this->capture.set(cv::CAP_PROP_FRAME_HEIGHT, this->height);
     // Set the status
     this->working = true;
     // Create the timer
