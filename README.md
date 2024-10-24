@@ -20,7 +20,7 @@
 
 ## Installation-humble
 
-#Set locale
+Set locale
 
 ```bash
 locale  # check for UTF-8
