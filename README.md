@@ -84,7 +84,7 @@ sudo apt update
 sudo apt install ros-humble-desktop python3-opencv ros-humble-cv-bridge
 ```
 
-To install YOLOv8 for inference
+To install YOLO for inference
 
 ```bash
 pip install ultralytics
