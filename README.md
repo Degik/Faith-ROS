@@ -16,7 +16,7 @@
 - ROS2 Humble (Ubuntu 22.04)
 - OpenCV (v4.5 or higher)
 - Python3.10
-- YOLOv8 (installed via `ultralytics` package)
+- YOLO (installed via `ultralytics` package)
 
 ## Installation-humble
 
