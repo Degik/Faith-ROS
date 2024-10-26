@@ -17,7 +17,7 @@
 - OpenCV (v4.5 or higher)
 - Cv_bridge
 - Python3.10
-- YOLOv8 (installed via `ultralytics` package)
+- YOLO (installed via `ultralytics` package)
 
 ## Installation-foxy
 
